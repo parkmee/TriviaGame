@@ -1,26 +1,88 @@
-const questions = [
+// create question bank with question, answer values, correct answer, and 2 hints
+const questionBank = [
     {
         question: "What country flies the world's only national flag that consists solely of four horizontal color bands?",
         values: [
             "Mauritius", "France", "Brunei", "Burma"
         ],
-        correctAnswer: "Mauritius"
+        correctAnswer: "Mauritius",
+        hint1: "Located in the Indian Ocean",
+        hint2: "This is an island country",
     }, {
-
+        question: "What country has a unique biota with about 90% of its plants and animals found nowhere else on earth?",
+        values: [
+            "Brazil", "Japan", "Madagascar", "Australia"
+        ],
+        correctAnswer: "Madagascar",
+        hint1: "Located in the southern hemisphere",
+        hint2: "This is the fourth largest island",
+    }, {
+        question: "a",
+        values: [
+            "a", "b", "c", "d"
+        ],
+        correctAnswer: "b",
+        hint1: "hint 1",
+        hint2: "hint 2",
     },
-]
-var x = 0;
 
-console.log(questions[x].values[1]);
-console.log(questions[x].values.length);
-console.log(questions[x].correctAnswer);
+]
+
+// setup game variables
+let userInput = [];
+let selectedQuestions = [];
+let timeLeft = 0;
+let score = 0;
+
+// establish references to document
+let gameTimer = $("#game-timer");
+let gameMsg = $("#game-msg");
+let startBtn = $("#start-btn");
+let questionView = $(".question-view");
+let scoreView = $(".score-view");
+
+// on click of start button, start game
+startBtn.on("click", function() {
+
+});
+// randomly populate questions and answer choices in new divs
+// do not allow duplicate selection of question
+// reset time
+// start timer
+// clear inputs
+// clear game message
+// hide start button
+// populate userInput array with length equal to selected question array
+
+// on click of answer choice for question
+// replace null value of in userInput array with answer choice
+
+// give hints upon request
+// decrement score by quarter point each hint
+
+// if time runs out
+// tally score
+
+// if all answers are submitted
+// tally score
+
+// tallying score function
+// if userInput answer equals correct answer for that question, give point
+// calculate percentage correct
+// show start button
+
+let x = 0;
+
+console.log(questionBank[x].values[1]);
+console.log(questionBank[x].values.length);
+console.log(questionBank[x].correctAnswer);
 
 function findAnswer (x) {
-    for (var i = 0; i < questions[x].values.length; i++) {
-        if (questions[x].values[i] === questions[x].correctAnswer) {
-        console.log(questions[x].values[i]);
+    for (var i = 0; i < questionBank[x].values.length; i++) {
+        if (questionBank[x].values[i] === questionBank[x].correctAnswer) {
+        console.log(questionBank[x].values[i]);
         }
     }
 }
 
-findAnswer(0);
+findAnswer(1);
