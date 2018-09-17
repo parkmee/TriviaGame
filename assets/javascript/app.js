@@ -30,9 +30,9 @@ const questionBank = [
 
 // setup game variables
 let userInput = [];
-let selectedQuestions = [];
-let timeLeft = 0;
 let score = 0;
+let timer = 0;
+let timerInterval;
 
 // establish references to document
 let gameTimer = $("#game-timer");
@@ -43,16 +43,19 @@ let scoreView = $(".score-view");
 
 // on click of start button, start game
 startBtn.on("click", function() {
+    console.log("Hi");
 
-});
-// randomly populate questions and answer choices in new divs
-// do not allow duplicate selection of question
-// reset time
+    // reset and start timer;
+    startTimer();
+
+
 // start timer
 // clear inputs
 // clear game message
 // hide start button
 // populate userInput array with length equal to selected question array
+});
+
 
 // on click of answer choice for question
 // replace null value of in userInput array with answer choice
@@ -83,6 +86,29 @@ function findAnswer (x) {
         console.log(questionBank[x].values[i]);
         }
     }
+}
+
+function startTimer() {
+    timer = 60;
+    clearInterval(timerInterval);
+    timerInterval = setInterval(decrement, 1000);
+}
+
+function decrement() {
+    // decrease timer by 1
+    timer--;
+    // display timer value
+    gameTimer.text(`Timer: ${timer} seconds`);
+
+    // when timer hits 0
+    if (timer === 0) {
+        // end the game
+        tally();
+    }
+}
+
+function tally() {
+
 }
 
 findAnswer(1);
