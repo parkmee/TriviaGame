@@ -8,34 +8,82 @@ const questionBank = [
             "Mauritius", "France", "Brunei", "Burma"
         ],
         correctAnswer: "Mauritius",
-        hint1: "Located in the Indian Ocean",
-        hint2: "This is an island country",
     }, {
         question: "What country has a unique biota with about 90% of its plants and animals found nowhere else on earth?",
         values: [
             "Brazil", "Japan", "Madagascar", "Australia"
         ],
         correctAnswer: "Madagascar",
-        hint1: "Located in the southern hemisphere",
-        hint2: "This is the fourth largest island",
     }, {
-        question: "Question 3",
+        question: "The four countries that make up the Horn of Africa in eastern Africa are Somalia, Ethiopia, Eritrea, and ____________.",
         values: [
-            "a", "b", "c", "d"
+            "Uganda", "Zambia", "Sudan", "Djibouti"
         ],
-        correctAnswer: "b",
-        hint1: "hint 1",
-        hint2: "hint 2",
+        correctAnswer: "Djibouti",
+    }, {
+        question: "In what country does the Amazon River originate?",
+        values: [
+            "Brazil", "Peru", "Colombia", "Bolivia"
+        ],
+        correctAnswer: "Peru",
+    }, {
+        question: "How many countries are in the Arabian Peninsula?",
+        values: [
+            "5", "7", "9", "11"
+        ],
+        correctAnswer: "9",
+    }, {
+        question: "What country, with 37 languages recorded in its 2009 constitution, has the record for the most official languages?",
+        values: [
+            "Bolivia", "India", "China", "South Africa"
+        ],
+        correctAnswer: "Bolivia",
+    }, {
+        question: "What is the tallest waterfall in the world?",
+        values: [
+            "Niagara Falls", "Angel Falls", "Yosemite Falls", "Ramnefjellfossen"
+        ],
+        correctAnswer: "Angel Falls",
+    }, {
+        question: "If it is 3 PM in Washington DC, what time is it in Tokyo, Japan?",
+        values: [
+            "3 AM", "4 AM", "5 AM", "6 AM"
+        ],
+        correctAnswer: "4 AM",
+    }, {
+        question: "What is the name of the world's saltiest sea?",
+        values: [
+            "Red Sea", "Black Sea", "Adriatic Sea", "Mediterranean Sea"
+        ],
+        correctAnswer: "Red Sea",
+    }, {
+        question: "What country is the smallest country in Asia?",
+        values: [
+            "Lebanon", "Nepal", "South Korea", "Sri Lanka"
+        ],
+        correctAnswer: "Lebanon",
+    }, {
+        question: "What country has the highest life expectancy at birth?",
+        values: [
+            "United States", "Switzerland", "Singapore", "Japan"
+        ],
+        correctAnswer: "Japan",
+    }, {
+        question: "How many countries have coastline on the Mediterranean Sea?",
+        values: [
+            "17", "21", "24", "29"
+        ],
+        correctAnswer: "21",
     },
-
 ]
 
 // setup game variables
 let correct = 0;
 let incorrect = 0;
 let unanswered = 0;
-let timer = 60;
+let timer = 0;
 let timerInterval;
+let timePerQuestion = 5;
 
 // establish references to document
 let gameTimer = $("#game-timer");
@@ -66,9 +114,6 @@ startBtn.on("click", function() {
     // populate questions and answers on screen
     showQuestions();
 });
-
-// give hints upon request
-// decrement score by quarter point each hint
 
 submitBtn.on("click", function() {
     tally();
@@ -110,10 +155,10 @@ function showQuestions() {
         }
         countQ++;
     }
-}
+};
 
 function startTimer() {
-    timer = 60;
+    timer = questionBank.length * timePerQuestion;
     clearInterval(timerInterval);
     timerInterval = setInterval(decrement, 1000);
 };
@@ -124,6 +169,10 @@ function decrement() {
     // display timer value
     gameTimer.text(`Timer: ${timer} seconds`);
 
+    // when time hits 10
+    if (timer === 10) {
+        gameMsg.text("Hurry up!!");
+    }
     // when timer hits 0
     if (timer === 0) {
         // end the game and tally score
@@ -157,41 +206,53 @@ function tally() {
         var answer = $("input[name="+name+"]:checked").val();
         console.log(answer);
         console.log(questionBank[countQ].correctAnswer);
+
+        // if the answer selected equals the correct answer, tally a correct score
         if (answer == questionBank[countQ].correctAnswer) {
             correct++;
+
+        // if the answer is undefined, tally an unanswered question
         } else if (answer == undefined) {
             unanswered++;
         }
+
+        // otherwise, tally an incorrect score
         else {
             incorrect++;
         }
+
+        // increment the index value of the questionBank array
         countQ++;        
     };
-    console.log(correct, incorrect);
+    // run function to show score
     showScore();
 };
 
 function showScore () {
+    // clear the questions and submit button from the screen
     questionView.empty();
     submitBtn.hide();
+
+    // show the start button to reset the game
     startBtn.show();
+
+    // show a game message according to the percentage correct
     if (correct/questionBank.length === 1) {
-        gameMsg.text("Perfect score! You'd make an excellent spy!");
+        gameMsg.text("Perfect score!");
     } else if (correct/questionBank.length >= 0.8) {
         gameMsg.text("Great job!");
     } else {
         gameMsg.text("Better luck next time!");
     }
+    // show score stats
     scoreView.append (
         `
             <h3>Correct: ${correct}</h3>
             <h3>Incorrect: ${incorrect}</h3>
             <h3>Unanswered: ${unanswered}</h3>
-            <h>You got ${(correct/questionBank.length*100).toFixed(0)}% right!</h4>
+            <h4>You got ${(correct/questionBank.length*100).toFixed(0)}% right!</h4>
+            <p>Visit the <a href="https://www.cia.gov/library/publications/the-world-factbook/">CIA World Factbook</a> to learn facts about 267 countries</p>
         `
     )
-
 };
-
-
 });
