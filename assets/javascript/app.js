@@ -90,6 +90,7 @@ let gameTimer = $("#game-timer");
 let gameMsg = $("#game-msg");
 let startBtn = $("#start-btn");
 let questionView = $(".question-view");
+let gameContent = $(".game-content");
 let scoreView = $(".score-view");
 let submitBtn = $("#submit-btn");
 
@@ -99,8 +100,9 @@ startBtn.on("click", function() {
     // hide start button
     startBtn.hide();
 
-    // show submit button
+    // show submit button and gamecontent
     submitBtn.show();
+    gameContent.addClass("shading border border-dark");
 
     // reset and start timer;
     startTimer();
@@ -109,12 +111,13 @@ startBtn.on("click", function() {
     scoreView.empty();
 
     // set game message
-    gameMsg.text("Think fast!");
+    gameMsg.html(`<strong>Think fast!</strong>`);
 
     // populate questions and answers on screen
     showQuestions();
 });
 
+// run tally function when submit button is clicked
 submitBtn.on("click", function() {
     tally();
 });
@@ -167,11 +170,11 @@ function decrement() {
     // decrease timer by 1
     timer--;
     // display timer value
-    gameTimer.text(`Timer: ${timer} seconds`);
+    gameTimer.html(`<strong>Timer: ${timer} seconds</strong>`);
 
     // when time hits 10
     if (timer === 10) {
-        gameMsg.text("Hurry up!!");
+        gameMsg.html(`<strong>Hurry up!!</strong>`);
     }
     // when timer hits 0
     if (timer === 0) {
@@ -238,11 +241,11 @@ function showScore () {
 
     // show a game message according to the percentage correct
     if (correct/questionBank.length === 1) {
-        gameMsg.text("Perfect score!");
+        gameMsg.html(`<strong>Perfect score</strong>`);
     } else if (correct/questionBank.length >= 0.8) {
-        gameMsg.text("Great job!");
+        gameMsg.html(`<strong>Great job!</strong>`);
     } else {
-        gameMsg.text("Better luck next time!");
+        gameMsg.html(`<strong>Better luck next time</strong>`);
     }
     // show score stats
     scoreView.append (

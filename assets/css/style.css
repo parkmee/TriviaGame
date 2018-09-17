@@ -10,3 +10,32 @@
     margin-top: 20px;
     display: none;
 }
+
+body {
+    background-image: url("../images/map_background.jpg");
+    background-size: cover;
+}
+
+h1 {
+    font-family: 'Ultra', serif;
+    padding-top: 10px;
+}
+
+.header {
+    background-color: rgba(236,224,198,.75);
+    margin: 40px 0px 20px 0px;
+    font-family:'Josefin Slab', serif;
+}
+
+.question-view {
+    padding: 20px;
+}
+
+.score-view {
+    padding-bottom: 40px;
+}
+
+.shading {
+    background-color: rgba(236,224,198,.75);    
+}
+
