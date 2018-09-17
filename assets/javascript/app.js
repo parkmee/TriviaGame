@@ -17,7 +17,7 @@ const questionBank = [
         hint1: "Located in the southern hemisphere",
         hint2: "This is the fourth largest island",
     }, {
-        question: "a",
+        question: "Question 3",
         values: [
             "a", "b", "c", "d"
         ],
@@ -48,14 +48,13 @@ startBtn.on("click", function() {
     // reset and start timer;
     startTimer();
 
+    // populate userInput array with length equal to selected question array
+    userInput.length = questionBank.length;
+    console.log(userInput);
 
-// start timer
-// clear inputs
-// clear game message
-// hide start button
-// populate userInput array with length equal to selected question array
+    // populate questions and answers on screen
+    showQuestions();
 });
-
 
 // on click of answer choice for question
 // replace null value of in userInput array with answer choice
@@ -88,8 +87,54 @@ function findAnswer (x) {
     }
 }
 
+findAnswer(1);
+
+function showQuestions() {
+
+    // reset count for the index position of the questions array
+    let countQ = 0;
+
+    // for each question in the question bank
+    for (let i of questionBank) {
+
+        // set q to equal the question
+        const q = questionBank[countQ].question;
+        console.log(q);
+
+        // reset count for the index position of the values array
+        let countV = 0;
+
+        // append question and answer choices to screen
+        questionView.append(`<div class="question-text text-left"><strong>Question ${countQ+1}:</strong> ${q}</div>`);
+
+        // for every value of the question
+        for (let j of questionBank[countQ].values) {
+
+            // set v equal to the value
+            const v = questionBank[countQ].values[countV];
+            questionView.append(
+                `
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="q${countQ}-options" id="q${countQ}-v${countV}" value="${v}">
+                        <label class="form-check-label" for="q${countQ}-v${countV}"> ${v}</label>
+                    </div>
+                `
+            )
+            
+
+            // <div class="form-check form-check-inline">
+            //    <input type="radio" id="q${count}-0" value=${questionBank[count].values[0]}>
+            //    <label for="q${count}-0">${questionBank[count].values[0]}</label>
+            countV++;
+            console.log(v);
+        }
+        countQ++;
+    }
+}
+
 function startTimer() {
     timer = 60;
+    startBtn.animate({ opacity: "0"});
     clearInterval(timerInterval);
     timerInterval = setInterval(decrement, 1000);
 }
@@ -111,4 +156,3 @@ function tally() {
 
 }
 
-findAnswer(1);
